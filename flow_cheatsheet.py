@@ -10,17 +10,17 @@ import urllib2
 from collections import namedtuple
 
 
-COMMIT = 'v0.29.0'
-GITHUB_DIR = 'https://github.com/facebook/flow/blob/{commit}/lib/'.format(commit=COMMIT)
-RAW_DIR = 'https://raw.githubusercontent.com/facebook/flow/{commit}/lib/'.format(commit=COMMIT)
+COMMIT = 'v0.32.0'
+GITHUB_DIR = 'https://github.com/facebook/flow/blob/{commit}/'.format(commit=COMMIT)
+RAW_DIR = 'https://raw.githubusercontent.com/facebook/flow/{commit}/'.format(commit=COMMIT)
 FILES = [
-    ('core.js', 'Core'),
-    ('react.js', 'React'),
-    ('dom.js', 'Document Object Model (DOM)'),
-    ('bom.js', 'Browser Object Model (BOM)'),
-    ('cssom.js', 'CSS Object Model (CSSOM)'),
-    ('indexeddb.js', 'indexedDB'),
-    ('node.js', 'Node.js'),
+    ('lib/core.js', 'Core'),
+    ('lib/react.js', 'React'),
+    ('lib/dom.js', 'Document Object Model (DOM)'),
+    ('lib/bom.js', 'Browser Object Model (BOM)'),
+    ('lib/cssom.js', 'CSS Object Model (CSSOM)'),
+    ('lib/indexeddb.js', 'indexedDB'),
+    ('lib/node.js', 'Node.js'),
 ]
 BUILTINS = [
     ('any', 'https://flowtype.org/docs/builtins.html#any'),
@@ -37,19 +37,47 @@ OUTPUT_FILE = 'dist/index.html'
 Result = namedtuple('Result', ['name', 'line_no', 'members', 'filename', 'type'])
 
 def main():
-    results = [('builtins', 'Built-in types', BUILTINS)]
+    builtin_results = [('builtins', 'Built-in types', BUILTINS)]
+    builtin_magic_results = get_builtin_magic_results()
+    lib_results = get_lib_results()
+    write_output(builtin_results + builtin_magic_results + lib_results)
+
+def get_builtin_magic_results():
+    FILENAME = 'src/typing/type_annotation.ml'
+    url = RAW_DIR + FILENAME
+    print url
+    body = download_file(url)
+
+    # parse file
+    results = []
+    for line_no, line in enumerate(body.splitlines()):
+        match = re.search(r'\(\*\s*(\$.*)\s*\*\)', line)
+        if match:
+            results.append(Result(match.group(1), line_no, None, FILENAME, None))
+
+    # post-process results
+    results = [
+        result for result in results
+        if not result.name.startswith((
+                '$Either', '$All', '$Tuple', '$Type',
+        ))]
+    results = sorted(results, key=lambda result: result.name.lower())
+
+    return [(FILENAME, 'Built-in "private" types', results)]
+
+def get_lib_results():
+    results = []
     for filename, heading in FILES:
         url = os.path.join(RAW_DIR, filename)
         print url
         body = download_file(url)
         file_results = parse_file(body, filename)
         file_results = post_process(file_results)
-        public_results = [result for result in file_results if not is_private(result)]
-        private_results = [result for result in file_results if is_private(result)]
+        public_results = [result for result in file_results if not is_magic(result)]
+        magic_results = [result for result in file_results if is_magic(result)]
         results.append((filename, heading, public_results))
-        results.append((filename, heading + ' "private" types', private_results))
-
-    write_output(results)
+        results.append((filename, heading + ' "private" types', magic_results))
+    return results
 
 def download_file(url):
     f = urllib2.urlopen(url)
@@ -64,7 +92,7 @@ def parse_file(body, filename):
     module = None
     for line_no, line in enumerate(body.splitlines()):
         # start of a module
-        match= re.search(r'^declare (module) (?P<type>.+) {', line)
+        match = re.search(r'^declare (module) (?P<type>.+) {', line)
         if match:
             indentation = r'\s+'
             module = Result(
@@ -77,7 +105,7 @@ def parse_file(body, filename):
             continue
 
         # end of a module
-        match= re.search(r'^}', line)
+        match = re.search(r'^}', line)
         if match and module:
             indentation = ''
             results.append(module)
@@ -112,10 +140,10 @@ def parse_file(body, filename):
 
     return results
 
-def is_private(result):
-    # not sure if this is correct, but there was a reference to "$" here:
+def is_magic(result):
+    # https://github.com/facebook/flow/issues/2197#issuecomment-238001710
     # http://sitr.us/2015/05/31/advanced-features-in-flow.html
-    return result.name.startswith('_') or '$' in result.name
+    return '$' in result.name
 
 def post_process(results):
     """sort and clean the results
@@ -151,7 +179,8 @@ def write_output(results):
     fout.write('The script to generate this list is on <a href="https://github.com/saltycrane/flow-cheatsheet">github</a>.\n')
     fout.write('Fixes welcome.\n')
     fout.write('</p>\n')
-    fout.write('<p>Note: I guess names with a <code>$</code> are supposed to be private so I separated them into their own section labeled X "private" types. See the note about that in <a href="http://sitr.us/2015/05/31/advanced-features-in-flow.html">http://sitr.us/2015/05/31/advanced-features-in-flow.html</a>.</p>\n')
+    fout.write('<p>Note: I created a separate section for "private" or "magic" types with a <code>$</code> in the name.\n')
+    fout.write('See the <a href="http://sitr.us/2015/05/31/advanced-features-in-flow.html">note here</a> and <a href="https://github.com/facebook/flow/issues/2197#issuecomment-238001710">comment here</a>.</p>')
     fout.write('<p>Flow version: {version}</p>\n'.format(version=COMMIT))
     fout.write('<ul class="list-unstyled">\n')
     fout.write('  <li><a href="#builtins">Built-in types</a></li>')
