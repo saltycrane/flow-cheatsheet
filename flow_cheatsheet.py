@@ -10,8 +10,8 @@ import urllib2
 from collections import namedtuple
 
 
-COMMIT = 'v0.32.0'
-GITHUB_DIR = 'https://github.com/facebook/flow/blob/{commit}/'.format(commit=COMMIT)
+COMMIT = 'v0.33.0'
+GITHUB_DIR = 'https://github.com/facebook/flow/tree/{commit}/'.format(commit=COMMIT)
 RAW_DIR = 'https://raw.githubusercontent.com/facebook/flow/{commit}/'.format(commit=COMMIT)
 FILES = [
     ('lib/core.js', 'Core'),
@@ -26,18 +26,31 @@ BUILTINS = [
     ('any', 'https://flowtype.org/docs/builtins.html#any'),
     ('boolean', 'https://flowtype.org/docs/builtins.html#boolean'),
     ('literal types', 'https://flowtype.org/docs/builtins.html#literal-types'),
-    ('mixed', 'https://flowtype.org/docs/builtins.html#mixed'),
     ('null', 'https://flowtype.org/docs/builtins.html#null-and-void'),
     ('number', 'https://flowtype.org/docs/builtins.html#number'),
+    ('mixed', 'https://flowtype.org/docs/builtins.html#mixed'),
     ('string', 'https://flowtype.org/docs/builtins.html#string'),
     ('void', 'https://flowtype.org/docs/builtins.html#null-and-void'),
+    ('Arrays', 'https://flowtype.org/docs/arrays.html'),
+    ('Class<T>', 'https://flowtype.org/docs/quick-reference.html#the-classt-type'),
+    ('Classes', 'https://flowtype.org/docs/classes.html'),
+    ('Exact objects', 'https://twitter.com/cpojer/status/780268582974296064'),
+    ('Functions', 'https://flowtype.org/docs/functions.html'),
+    ('Generics', 'https://flowtype.org/docs/quick-reference.html#generics'),
+    ('Interfaces', 'https://flowtype.org/docs/quick-reference.html#interfaces'),
+    ('Maybe types', 'https://flowtype.org/docs/nullable-types.html'),
+    ('Objects', 'https://flowtype.org/docs/objects.html'),
+    ('Tuples', 'https://flowtype.org/docs/arrays.html#tuples'),
+    ('Type aliases', 'https://flowtype.org/docs/type-aliases.html'),
+    ('Typeof', 'https://flowtype.org/docs/typeof.html'),
+    ('Union and Intersection types', 'https://flowtype.org/docs/union-intersection-types.html'),
 ]
 OUTPUT_FILE = 'dist/index.html'
 
 Result = namedtuple('Result', ['name', 'line_no', 'members', 'filename', 'type'])
 
 def main():
-    builtin_results = [('builtins', 'Built-in types', BUILTINS)]
+    builtin_results = [('builtins', 'Built-ins', BUILTINS)]
     builtin_magic_results = get_builtin_magic_results()
     lib_results = get_lib_results()
     write_output(builtin_results + builtin_magic_results + lib_results)
