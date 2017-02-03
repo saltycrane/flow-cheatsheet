@@ -10,7 +10,7 @@ import urllib2
 from collections import namedtuple
 
 
-COMMIT = 'v0.35.0'
+COMMIT = 'v0.37.4'
 GITHUB_DIR = 'https://github.com/facebook/flow/tree/{commit}/'.format(commit=COMMIT)
 RAW_DIR = 'https://raw.githubusercontent.com/facebook/flow/{commit}/'.format(commit=COMMIT)
 FILES = [
