@@ -10,7 +10,7 @@ import urllib2
 from collections import namedtuple
 
 
-COMMIT = 'v0.38.0'
+COMMIT = 'v0.40.0'
 GITHUB_DIR = 'https://github.com/facebook/flow/tree/{commit}/'.format(commit=COMMIT)
 RAW_DIR = 'https://raw.githubusercontent.com/facebook/flow/{commit}/'.format(commit=COMMIT)
 FILES = [
@@ -21,6 +21,8 @@ FILES = [
     ('lib/cssom.js', 'CSS Object Model (CSSOM)'),
     ('lib/indexeddb.js', 'indexedDB'),
     ('lib/node.js', 'Node.js'),
+    ('lib/serviceworkers.js', 'Service Workers'),
+    ('lib/streams.js', 'Streams'),
 ]
 BUILTINS = [
     ('any', 'https://flowtype.org/docs/builtins.html#any'),
