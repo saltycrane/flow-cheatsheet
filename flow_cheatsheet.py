@@ -78,7 +78,7 @@ def get_builtin_magic_results():
         ))]
     results = sorted(results, key=lambda result: result.name.lower())
 
-    return [(FILENAME, 'Built-in "private" types', results)]
+    return [('builtins-private', 'Built-in "private" types', results)]
 
 def get_lib_results():
     results = []
@@ -91,7 +91,7 @@ def get_lib_results():
         public_results = [result for result in file_results if not is_magic(result)]
         magic_results = [result for result in file_results if is_magic(result)]
         results.append((filename, heading, public_results))
-        results.append((filename, heading + ' "private" types', magic_results))
+        results.append((filename + '-private', heading + ' "private" types', magic_results))
     return results
 
 def download_file(url):
