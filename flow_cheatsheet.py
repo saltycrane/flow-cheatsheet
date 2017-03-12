@@ -10,7 +10,7 @@ import urllib2
 from collections import namedtuple
 
 
-COMMIT = 'v0.40.0'
+COMMIT = 'v0.41.0'
 GITHUB_DIR = 'https://github.com/facebook/flow/tree/{commit}/'.format(commit=COMMIT)
 RAW_DIR = 'https://raw.githubusercontent.com/facebook/flow/{commit}/'.format(commit=COMMIT)
 FILES = [
@@ -36,7 +36,7 @@ BUILTINS = [
     ('Arrays', 'https://flowtype.org/docs/arrays.html'),
     ('Class<T>', 'https://flowtype.org/docs/quick-reference.html#the-classt-type'),
     ('Classes', 'https://flowtype.org/docs/classes.html'),
-    ('Exact objects', 'https://flowtype.org/docs/objects.html#exact-object-types'),
+    ('Exact objects ({||} syntax)', 'https://flowtype.org/docs/objects.html#exact-object-types'),
     ('Functions', 'https://flowtype.org/docs/functions.html'),
     ('Generics', 'https://flowtype.org/docs/quick-reference.html#generics'),
     ('Interfaces', 'https://flowtype.org/docs/quick-reference.html#interfaces'),
