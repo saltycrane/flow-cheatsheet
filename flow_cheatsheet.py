@@ -25,27 +25,41 @@ FILES = [
     ('lib/streams.js', 'Streams'),
 ]
 BUILTINS = [
-    ('any', 'https://flowtype.org/docs/builtins.html#any'),
-    ('boolean', 'https://flowtype.org/docs/builtins.html#boolean'),
-    ('literal types', 'https://flowtype.org/docs/builtins.html#literal-types'),
-    ('null', 'https://flowtype.org/docs/builtins.html#null-and-void'),
-    ('number', 'https://flowtype.org/docs/builtins.html#number'),
-    ('mixed', 'https://flowtype.org/docs/builtins.html#mixed'),
-    ('string', 'https://flowtype.org/docs/builtins.html#string'),
-    ('void', 'https://flowtype.org/docs/builtins.html#null-and-void'),
-    ('Arrays', 'https://flowtype.org/docs/arrays.html'),
-    ('Class<T>', 'https://flowtype.org/docs/quick-reference.html#the-classt-type'),
-    ('Classes', 'https://flowtype.org/docs/classes.html'),
-    ('Exact objects ({||} syntax)', 'https://flowtype.org/docs/objects.html#exact-object-types'),
-    ('Functions', 'https://flowtype.org/docs/functions.html'),
-    ('Generics', 'https://flowtype.org/docs/quick-reference.html#generics'),
-    ('Interfaces', 'https://flowtype.org/docs/quick-reference.html#interfaces'),
-    ('Maybe types', 'https://flowtype.org/docs/nullable-types.html'),
-    ('Objects', 'https://flowtype.org/docs/objects.html'),
-    ('Tuples', 'https://flowtype.org/docs/arrays.html#tuples'),
-    ('Type aliases', 'https://flowtype.org/docs/type-aliases.html'),
-    ('Typeof', 'https://flowtype.org/docs/typeof.html'),
-    ('Union and Intersection types', 'https://flowtype.org/docs/union-intersection-types.html'),
+    ('* (Existential type)', 'https://flow.org/en/docs/types/utilities/#toc-the-existential-type'),
+    ('any', 'https://flow.org/en/docs/types/any/'),
+    ('boolean', 'https://flow.org/en/docs/types/primitives/#toc-booleans'),
+    ('null', 'https://flow.org/en/docs/types/primitives/#toc-null-and-void'),
+    ('number', 'https://flow.org/en/docs/types/primitives/#toc-numbers'),
+    ('mixed', 'https://flow.org/en/docs/types/mixed/'),
+    ('string', 'https://flow.org/en/docs/types/primitives/#toc-strings'),
+    ('void', 'https://flow.org/en/docs/types/primitives/#toc-null-and-void'),
+    ('Arrays', 'https://flow.org/en/docs/types/arrays/'),
+    ('Class<T>', 'https://flow.org/en/docs/types/utilities/#toc-class'),
+    ('Classes', 'https://flow.org/en/docs/types/classes/'),
+    ('Exact objects ({||} syntax)', 'https://flow.org/en/docs/types/objects/#toc-exact-object-types'),
+    ('Functions', 'https://flow.org/en/docs/types/functions/'),
+    ('Generics', 'https://flow.org/en/docs/types/generics/'),
+    ('Interfaces', 'https://flow.org/en/docs/types/interfaces/'),
+    ('Intersection types', 'https://flow.org/en/docs/types/intersections/'),
+    ('Literal types', 'https://flow.org/en/docs/types/literals/'),
+    ('Maybe types', 'https://flow.org/en/docs/types/maybe/'),
+    ('Objects', 'https://flow.org/en/docs/types/objects/'),
+    ('Tuples', 'https://flow.org/en/docs/types/tuples/'),
+    ('Type aliases', 'https://flow.org/en/docs/types/aliases/'),
+    ('Typeof', 'https://flow.org/en/docs/types/typeof/'),
+    ('Union types', 'https://flow.org/en/docs/types/unions/'),
+    ('Variable types', 'https://flow.org/en/docs/types/variables/'),
+]
+
+BUILTINS_PRIVATE = [
+    ('$Abstract<T>', 'https://flow.org/en/docs/types/utilities/#toc-abstract'),
+    ('$Diff<A, B>', 'https://flow.org/en/docs/types/utilities/#toc-diff'),
+    ('$Exact<T>', 'https://flow.org/en/docs/types/utilities/#toc-exact'),
+    ('$Keys<T>', 'https://flow.org/en/docs/types/utilities/#toc-keys'),
+    ('$ObjMap<T, F>', 'https://flow.org/en/docs/types/utilities/#toc-objmap'),
+    ('$PropertyType<T, x>', 'https://flow.org/en/docs/types/utilities/#toc-propertytype'),
+    ('$Subtype<T>', 'https://flow.org/en/docs/types/utilities/#toc-subtype'),
+    ('$Supertype<T>', 'https://flow.org/en/docs/types/utilities/#toc-supertype'),
 ]
 OUTPUT_FILE = 'dist/index.html'
 
@@ -53,7 +67,7 @@ Result = namedtuple('Result', ['name', 'line_no', 'members', 'filename', 'type']
 
 def main():
     builtin_results = [('builtins', 'Built-ins', BUILTINS)]
-    builtin_magic_results = get_builtin_magic_results()
+    builtin_magic_results = [('builtins-private', 'Built-in "private" types', BUILTINS_PRIVATE)]
     lib_results = get_lib_results()
     write_output(builtin_results + builtin_magic_results + lib_results)
 
@@ -188,14 +202,14 @@ def write_output(results):
 
     fout.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">\n')
     fout.write('<p>\n')
-    fout.write('<a href="https://flowtype.org/">Flow</a> is a static type checker for Javascript.\n')
+    fout.write('<a href="https://flow.org/">Flow</a> is a static type checker for Javascript.\n')
     fout.write('This is a list of Flow types generated from the source code in ')
     fout.write('<a href="{GITHUB_DIR}">{GITHUB_DIR}</a>\n'.format(GITHUB_DIR=GITHUB_DIR))
     fout.write('The script to generate this list is on <a href="https://github.com/saltycrane/flow-cheatsheet">github</a>.\n')
     fout.write('Fixes welcome.\n')
     fout.write('</p>\n')
     fout.write('<p>Note: I created a separate section for "private" or "magic" types with a <code>$</code> in the name.\n')
-    fout.write('See the <a href="http://sitr.us/2015/05/31/advanced-features-in-flow.html">note here</a> and <a href="https://github.com/facebook/flow/issues/2197#issuecomment-238001710">comment here</a>.</p>')
+    fout.write('See the <a href="http://sitr.us/2015/05/31/advanced-features-in-flow.html">note here</a> and <a href="https://github.com/facebook/flow/issues/2197#issuecomment-238001710">comment here</a>. <em>Update</em>: Some these types are now <a href="https://flow.org/en/docs/types/utilities/">documented here</a>.</p>')
     fout.write('<p>Flow version: {version}</p>\n'.format(version=COMMIT))
     fout.write('<ul class="list-unstyled">\n')
     fout.write('  <li><a href="#builtins">Built-in types</a></li>')
