@@ -31,9 +31,9 @@ See the <a href="http://sitr.us/2015/05/31/advanced-features-in-flow.html">note 
 <li><a href="https://flow.org/en/docs/types/mixed/">mixed</a></li>
 <li><a href="https://flow.org/en/docs/types/primitives/#toc-strings">string</a></li>
 <li><a href="https://flow.org/en/docs/types/primitives/#toc-null-and-void">void</a></li>
+<li><a href="https://flow.org/en/docs/types/arrays/">Arrays</a></li>
 </ul></div>
 <div class="col-sm-4"><ul>
-<li><a href="https://flow.org/en/docs/types/arrays/">Arrays</a></li>
 <li><a href="https://flow.org/en/docs/types/utilities/#toc-class">Class&lt;T&gt;</a></li>
 <li><a href="https://flow.org/en/docs/types/classes/">Classes</a></li>
 <li><a href="https://flow.org/en/docs/types/objects/#toc-exact-object-types">Exact objects ({||} syntax)</a></li>
@@ -41,11 +41,12 @@ See the <a href="http://sitr.us/2015/05/31/advanced-features-in-flow.html">note 
 <li><a href="https://flow.org/en/docs/types/generics/">Generics</a></li>
 <li><a href="https://flow.org/en/docs/types/interfaces/">Interfaces</a></li>
 <li><a href="https://flow.org/en/docs/types/intersections/">Intersection types</a></li>
-</ul></div>
-<div class="col-sm-4"><ul>
 <li><a href="https://flow.org/en/docs/types/literals/">Literal types</a></li>
 <li><a href="https://flow.org/en/docs/types/maybe/">Maybe types</a></li>
+</ul></div>
+<div class="col-sm-4"><ul>
 <li><a href="https://flow.org/en/docs/types/objects/">Objects</a></li>
+<li><a href="https://flow.org/en/docs/types/opaque-types/">Opaque types</a></li>
 <li><a href="https://flow.org/en/docs/types/tuples/">Tuples</a></li>
 <li><a href="https://flow.org/en/docs/types/aliases/">Type aliases</a></li>
 <li><a href="https://flow.org/en/docs/types/typeof/">Typeof</a></li>
@@ -168,6 +169,8 @@ See the <a href="http://sitr.us/2015/05/31/advanced-features-in-flow.html">note 
 <div class="panel-body">
 <div class="row">
 <div class="col-sm-4"><ul>
+<li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L135">_ReactClass&lt;  DefaultProps,  Props,  Config</a> <small>(type)</small></li>
+<li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L96">LegacyReactComponent&lt;  DefaultProps,  Props,  State,&gt; </a> <small>(class)</small></li>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L164">react</a> <small>(module)</small><ul>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L165">Children</a> <small>(var)</small></li>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L204">Component</a> <small>(var)</small></li>
@@ -177,9 +180,9 @@ See the <a href="http://sitr.us/2015/05/31/advanced-features-in-flow.html">note 
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L206">Element</a> <small>(var)</small></li>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L167">PropTypes</a> <small>(var)</small></li>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L205">PureComponent</a> <small>(var)</small></li>
+</ul></ul></div>
+<div class="col-sm-4"><ul><ul>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L168">version</a> <small>(var)</small></li></ul></li>
-</ul></div>
-<div class="col-sm-4"><ul>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L213">React</a> <small>(module)</small><ul>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L214">exports</a> <small>(var)</small></li></ul></li>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L217">react-dom</a> <small>(module)</small><ul>
@@ -213,18 +216,19 @@ See the <a href="http://sitr.us/2015/05/31/advanced-features-in-flow.html">note 
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L394">$JSXIntrinsics</a> <small>(type)</small></li>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L149">$PropsOf&lt;Config&gt;</a> <small>(type)</small></li>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L22">React$Component&lt;DefaultProps, Props, State&gt;</a> <small>(class)</small></li>
+<li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L157">React$Element&lt;Config&gt;</a> <small>(class)</small></li>
 </ul></div>
 <div class="col-sm-4"><ul>
-<li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L157">React$Element&lt;Config&gt;</a> <small>(class)</small></li>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L12">React$Node&lt;Config&gt;</a> <small>(type)</small></li>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L267">React$PropTypes$arrayOf</a> <small>(type)</small></li>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L269">React$PropTypes$instanceOf</a> <small>(type)</small></li>
-</ul></div>
-<div class="col-sm-4"><ul>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L271">React$PropTypes$objectOf</a> <small>(type)</small></li>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L273">React$PropTypes$oneOf</a> <small>(type)</small></li>
+</ul></div>
+<div class="col-sm-4"><ul>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L275">React$PropTypes$oneOfType</a> <small>(type)</small></li>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L278">React$PropTypes$shape</a> <small>(type)</small></li>
+<li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L74">React$PureComponent&lt;  DefaultProps,  Props,  State,&gt; </a> <small>(class)</small></li>
 </ul></div>
 </div></div></div>
 <div class="panel panel-default">

@@ -119,7 +119,41 @@ def parse_file(body, filename):
     results = []
     indentation = ''
     module = None
-    for line_no, line in enumerate(body.splitlines()):
+    multiline = False
+    for single_line_no, single_line in enumerate(body.splitlines()):
+
+        # multi-line handling... if the line starts a type declaration but
+        # finishes on a subsequent line, enter multiline state and start
+        # concatenating lines until the final character is found.
+        CHAR_DENOTING_END_OF_MULTILINE = {
+            'declare class': '{',
+            'type': '=',
+        }
+
+        # start of multi-line
+        match = re.search(r'^\s*(declare class|type) .+', single_line)
+        if match and CHAR_DENOTING_END_OF_MULTILINE[match.group(1)] not in single_line:
+            multiline = True
+            line_no = single_line_no
+            line = single_line
+            end_char = CHAR_DENOTING_END_OF_MULTILINE[match.group(1)]
+            continue
+
+        # in multiline state
+        elif multiline:
+            line = line + single_line
+            # end of multiline
+            if end_char in single_line:
+                multiline = False
+            # still in multiline state
+            else:
+                continue
+
+        # not a multiline, treat as normal
+        else:
+            line_no = single_line_no
+            line = single_line
+
         # start of a module
         match = re.search(r'^declare (module) (?P<type>.+) {', line)
         if match:
