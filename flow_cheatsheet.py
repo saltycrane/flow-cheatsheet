@@ -44,6 +44,7 @@ BUILTINS = [
     ('Literal types', 'https://flow.org/en/docs/types/literals/'),
     ('Maybe types', 'https://flow.org/en/docs/types/maybe/'),
     ('Objects', 'https://flow.org/en/docs/types/objects/'),
+    ('Opaque types', 'https://flow.org/en/docs/types/opaque-types/'),
     ('Tuples', 'https://flow.org/en/docs/types/tuples/'),
     ('Type aliases', 'https://flow.org/en/docs/types/aliases/'),
     ('Typeof', 'https://flow.org/en/docs/types/typeof/'),
