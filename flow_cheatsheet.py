@@ -192,7 +192,7 @@ def parse_file(body, filename):
             appender.append(Result(match.group('type'), line_no, None, filename, "interface"))
             continue
 
-        match= re.search('^' + indentation + r'declare var (?P<type>.+)', line)
+        match = re.search('^' + indentation + r'declare var (?P<type>.+)', line)
         if match:
             appender.append(Result(match.group('type'), line_no, None, filename, "var"))
             continue
@@ -289,7 +289,7 @@ def write_output(results):
 def generate_output_lines(results):
     """generate html output lines to write given a list of results
     """
-    output= []
+    output = []
     for result in results:
         if len(result) == 2:
             # result is a built-in result
