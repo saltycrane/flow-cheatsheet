@@ -66,11 +66,13 @@ OUTPUT_FILE = 'dist/index.html'
 
 Result = namedtuple('Result', ['name', 'line_no', 'members', 'filename', 'type'])
 
+
 def main():
     builtin_results = [('builtins', 'Built-ins', BUILTINS)]
     builtin_magic_results = [('builtins-private', 'Built-in "private" types', BUILTINS_PRIVATE)]
     lib_results = get_lib_results()
     write_output(builtin_results + builtin_magic_results + lib_results)
+
 
 def get_builtin_magic_results():
     FILENAME = 'src/typing/type_annotation.ml'
@@ -95,6 +97,7 @@ def get_builtin_magic_results():
 
     return [('builtins-private', 'Built-in "private" types', results)]
 
+
 def get_lib_results():
     results = []
     for filename, heading in FILES:
@@ -109,10 +112,12 @@ def get_lib_results():
         results.append((filename + '-private', heading + ' "private" types', magic_results))
     return results
 
+
 def download_file(url):
     f = urllib2.urlopen(url)
     body = f.read()
     return body
+
 
 def parse_file(body, filename):
     """extract data from the file using regular expressions
@@ -192,7 +197,7 @@ def parse_file(body, filename):
             appender.append(Result(match.group('type'), line_no, None, filename, "interface"))
             continue
 
-        match= re.search('^' + indentation + r'declare var (?P<type>.+)', line)
+        match = re.search('^' + indentation + r'declare var (?P<type>.+)', line)
         if match:
             appender.append(Result(match.group('type'), line_no, None, filename, "var"))
             continue
@@ -204,10 +209,12 @@ def parse_file(body, filename):
 
     return results
 
+
 def is_magic(result):
     # https://github.com/facebook/flow/issues/2197#issuecomment-238001710
     # http://sitr.us/2015/05/31/advanced-features-in-flow.html
     return '$' in result.name
+
 
 def post_process(results):
     """sort and clean the results
@@ -231,6 +238,7 @@ def post_process(results):
     results = [transform_result(result) for result in results]
     results = sorted(results, key=lambda result: result.name.lower())
     return results
+
 
 def write_output(results):
     fout = open(OUTPUT_FILE, 'w')
@@ -286,10 +294,11 @@ def write_output(results):
 
     fout.close()
 
+
 def generate_output_lines(results):
     """generate html output lines to write given a list of results
     """
-    output= []
+    output = []
     for result in results:
         if len(result) == 2:
             # result is a built-in result
@@ -300,6 +309,7 @@ def generate_output_lines(results):
             lines = generate_result(result)
             output.extend(lines)
     return output
+
 
 def generate_result(result):
     """recursively generate html lines to write starting at a single result
@@ -320,6 +330,7 @@ def generate_result(result):
         lines.append('<li>{link}</li>'.format(link=link))
     return lines
 
+
 def generate_alink(name, url, type=None):
     """return html for a single <a> link
     """
@@ -328,9 +339,11 @@ def generate_alink(name, url, type=None):
         alink += ' <small>({type})</small>'.format(type=type)
     return alink
 
+
 def create_github_url(line_no, filename):
     return '{github_url}#L{line_no}'.format(
         github_url=(GITHUB_DIR + filename), line_no=(line_no + 1))
+
 
 def group_in_columns(items):
     N_COLUMNS = 3.0
@@ -353,11 +366,13 @@ def group_in_columns(items):
 
     return grouped
 
+
 def html_escape(text):
     text = text.replace('&', '&amp;')
     text = text.replace('<', '&lt;')
     text = text.replace('>', '&gt;')
     return text
+
 
 if __name__ == '__main__':
     main()
