@@ -59,8 +59,8 @@ BUILTINS_PRIVATE = [
     ('$Keys<T>', 'https://flow.org/en/docs/types/utilities/#toc-keys'),
     ('$ObjMap<T, F>', 'https://flow.org/en/docs/types/utilities/#toc-objmap'),
     ('$PropertyType<T, x>', 'https://flow.org/en/docs/types/utilities/#toc-propertytype'),
-    ('$Subtype<T>', 'https://flow.org/en/docs/types/utilities/#toc-subtype'),
-    ('$Supertype<T>', 'https://flow.org/en/docs/types/utilities/#toc-supertype'),
+    # ('$Subtype<T>', 'https://flow.org/en/docs/types/utilities/#toc-subtype'),
+    # ('$Supertype<T>', 'https://flow.org/en/docs/types/utilities/#toc-supertype'),
 ]
 OUTPUT_FILE = 'dist/index.html'
 
@@ -69,7 +69,7 @@ Result = namedtuple('Result', ['name', 'line_no', 'members', 'filename', 'type']
 
 def main():
     builtin_results = [('builtins', 'Built-ins', BUILTINS)]
-    builtin_magic_results = [('builtins-private', 'Built-in "private" types', BUILTINS_PRIVATE)]
+    builtin_magic_results = get_builtin_magic_results()
     lib_results = get_lib_results()
     write_output(builtin_results + builtin_magic_results + lib_results)
 
@@ -83,17 +83,20 @@ def get_builtin_magic_results():
     # parse file
     results = []
     for line_no, line in enumerate(body.splitlines()):
-        match = re.search(r'\(\*\s*(\$.*)\s*\*\)', line)
+        match = re.search(r'\(\*\s*(\$.*)$', line)
         if match:
-            results.append(Result(match.group(1), line_no, None, FILENAME, None))
+            name = match.group(1).replace('*)', '')
+            results.append(Result(name, line_no, None, FILENAME, None))
 
     # post-process results
     results = [
         result for result in results
         if not result.name.startswith((
-                '$Either', '$All', '$Tuple', '$Type',
+                '$All', '$Diff', '$Either', '$Exact', '$Keys', '$ObjectMap',
+                '$PropertyType', '$Tuple', '$Type',
         ))]
-    results = sorted(results, key=lambda result: result.name.lower())
+    results += BUILTINS_PRIVATE;
+    results = sorted(results, key=lambda result: result[0].lower())
 
     return [('builtins-private', 'Built-in "private" types', results)]
 
