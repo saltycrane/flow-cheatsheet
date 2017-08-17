@@ -10,9 +10,27 @@ import urllib2
 from collections import namedtuple
 
 
-COMMIT = 'v0.52.0'
-GITHUB_DIR = 'https://github.com/facebook/flow/tree/{commit}/'.format(commit=COMMIT)
-RAW_DIR = 'https://raw.githubusercontent.com/facebook/flow/{commit}/'.format(commit=COMMIT)
+Result = namedtuple('Result', ['name', 'line_no', 'members', 'filename', 'type'])
+
+# Global variables set by main()
+COMMIT = None
+GITHUB_DIR = None
+RAW_DIR = None
+OUTPUT_FILE = None
+PUBLISH_URL = None
+
+# Constants
+COMMITS = [
+    'v0.53.1',
+    'v0.52.0',
+    'v0.51.1',
+    'v0.50.0',
+    'v0.49.1',
+    'v0.48.0',
+    'v0.47.0',
+    'v0.46.0',
+    'v0.45.0',
+]
 FILES = [
     ('lib/core.js', 'Core'),
     ('lib/react.js', 'React'),
@@ -51,7 +69,6 @@ BUILTINS = [
     ('Union types', 'https://flow.org/en/docs/types/unions/'),
     ('Variable types', 'https://flow.org/en/docs/types/variables/'),
 ]
-
 BUILTINS_PRIVATE = [
     ('$Abstract<T>', 'https://flow.org/en/docs/types/utilities/#toc-abstract'),
     ('$Diff<A, B>', 'https://flow.org/en/docs/types/utilities/#toc-diff'),
@@ -62,16 +79,25 @@ BUILTINS_PRIVATE = [
     # ('$Subtype<T>', 'https://flow.org/en/docs/types/utilities/#toc-subtype'),
     # ('$Supertype<T>', 'https://flow.org/en/docs/types/utilities/#toc-supertype'),
 ]
-OUTPUT_FILE = 'dist/index.html'
-
-Result = namedtuple('Result', ['name', 'line_no', 'members', 'filename', 'type'])
+PUBLISH_BASE_URL = '/flow-type-cheat-sheet'
 
 
 def main():
-    builtin_results = [('builtins', 'Built-ins', BUILTINS)]
-    builtin_magic_results = get_builtin_magic_results()
-    lib_results = get_lib_results()
-    write_output(builtin_results + builtin_magic_results + lib_results)
+    global COMMIT
+    global GITHUB_DIR
+    global RAW_DIR
+    global OUTPUT_FILE
+
+    for commit in COMMITS:
+        COMMIT = commit
+        GITHUB_DIR = 'https://github.com/facebook/flow/tree/{commit}/'.format(commit=COMMIT)
+        RAW_DIR = 'https://raw.githubusercontent.com/facebook/flow/{commit}/'.format(commit=COMMIT)
+        OUTPUT_FILE = 'dist/{commit}.html'.format(commit=COMMIT)
+
+        builtin_results = [('builtins', 'Built-ins', BUILTINS)]
+        builtin_magic_results = get_builtin_magic_results()
+        lib_results = get_lib_results()
+        write_output(builtin_results + builtin_magic_results + lib_results)
 
 
 def get_builtin_magic_results():
@@ -190,22 +216,22 @@ def parse_file(body, filename):
         else:
             appender = results
 
-        match = re.search('^' + indentation + r'declare (class) (?P<type>.+) {', line)
+        match = re.search('^' + indentation + r'declare (export )?(class) (?P<type>.+) {', line)
         if match:
             appender.append(Result(match.group('type'), line_no, None, filename, "class"))
             continue
 
-        match = re.search('^' + indentation + r'declare (interface) (?P<type>.+) {', line)
+        match = re.search('^' + indentation + r'declare (export )?(interface) (?P<type>.+) {', line)
         if match:
             appender.append(Result(match.group('type'), line_no, None, filename, "interface"))
             continue
 
-        match = re.search('^' + indentation + r'declare var (?P<type>.+)', line)
+        match = re.search('^' + indentation + r'declare (export )?var (?P<type>.+)', line)
         if match:
             appender.append(Result(match.group('type'), line_no, None, filename, "var"))
             continue
 
-        match = re.search('^' + indentation + r'type (?P<type>.+) =', line)
+        match = re.search('^' + indentation + r'(declare )?(export )?type (?P<type>.+) =', line)
         if match:
             appender.append(Result(match.group('type'), line_no, None, filename, "type"))
             continue
@@ -229,10 +255,13 @@ def post_process(results):
             members = post_process(members)
 
         # remove unwanted stuff at end
-        name = re.sub(r'extends.*$', '', name)
-        name = re.sub(r'=.*$', '', name)
-        name = re.sub(r': .*$', '', name)
+        if '>' in name:
+            name = re.sub(r'^(.*\>)', r'\1', name)
+        else:
+            name = re.sub(r'=.*$', '', name)
+            name = re.sub(r': .*$', '', name)
 
+        name = re.sub(r'extends.*$', '', name)
         # remove quotes
         name = name.strip('\'"')
 
@@ -244,8 +273,23 @@ def post_process(results):
 
 
 def write_output(results):
-    fout = open(OUTPUT_FILE, 'w')
+    version_list = []
+    for index, version in enumerate(COMMITS):
+        if index == 0:
+            slug = 'latest'
+        else:
+            slug = version
 
+        if version == COMMIT:
+            version_list.append(
+                ' <strong style="font-size: 120%">{version}</strong>'.format(
+                    version=version))
+        else:
+            version_list.append(
+                ' <a href="{base_url}/{slug}/">{version}</a>'.format(
+                    base_url=PUBLISH_BASE_URL, slug=slug, version=version))
+
+    fout = open(OUTPUT_FILE, 'w')
     fout.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">\n')
     fout.write('<p>\n')
     fout.write('<a href="https://flow.org/">Flow</a> is a static type checker for Javascript.\n')
@@ -256,7 +300,8 @@ def write_output(results):
     fout.write('</p>\n')
     fout.write('<p>Note: I created a separate section for "private" or "magic" types with a <code>$</code> in the name.\n')
     fout.write('See the <a href="http://sitr.us/2015/05/31/advanced-features-in-flow.html">note here</a> and <a href="https://github.com/facebook/flow/issues/2197#issuecomment-238001710">comment here</a>. <em>Update</em>: Some these types are now <a href="https://flow.org/en/docs/types/utilities/">documented here</a>.</p>')
-    fout.write('<p>Flow version: {version}</p>\n'.format(version=COMMIT))
+    fout.write('<p>Flow version: {versions}</p>\n'.format(versions=''.join(version_list)))
+    fout.write('<h4 id="contents">Contents</h4>\n')
     fout.write('<ul class="list-unstyled">\n')
     fout.write('  <li><a href="#builtins">Built-in types</a></li>')
     for filename, heading in FILES:
