@@ -292,7 +292,7 @@ def write_output(results):
     fout = open(OUTPUT_FILE, 'w')
     fout.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">\n')
     fout.write('<p>\n')
-    fout.write('<a href="https://flow.org/">Flow</a> is a static type checker for Javascript.\n')
+    fout.write('<a href="https://flow.org/">Flow</a> is a static type checker for JavaScript.\n')
     fout.write('This is a list of Flow types generated from the source code in ')
     fout.write('<a href="{GITHUB_DIR}">{GITHUB_DIR}</a>\n'.format(GITHUB_DIR=GITHUB_DIR))
     fout.write('The script to generate this list is on <a href="https://github.com/saltycrane/flow-cheatsheet">github</a>.\n')
