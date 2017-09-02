@@ -43,8 +43,8 @@ FILES = [
     ('lib/serviceworkers.js', 'Service Workers'),
     ('lib/streams.js', 'Streams'),
 ]
+
 BUILTINS = [
-    ('* (Existential type)', 'https://flow.org/en/docs/types/utilities/#toc-the-existential-type'),
     ('any', 'https://flow.org/en/docs/types/any/'),
     ('boolean', 'https://flow.org/en/docs/types/primitives/#toc-booleans'),
     ('null', 'https://flow.org/en/docs/types/primitives/#toc-null-and-void'),
@@ -52,24 +52,26 @@ BUILTINS = [
     ('mixed', 'https://flow.org/en/docs/types/mixed/'),
     ('string', 'https://flow.org/en/docs/types/primitives/#toc-strings'),
     ('void', 'https://flow.org/en/docs/types/primitives/#toc-null-and-void'),
-    ('Arrays', 'https://flow.org/en/docs/types/arrays/'),
+    ('Arrays ([] syntax)', 'https://flow.org/en/docs/types/arrays/'),
     ('Class<T>', 'https://flow.org/en/docs/types/utilities/#toc-class'),
     ('Classes', 'https://flow.org/en/docs/types/classes/'),
     ('Exact objects ({||} syntax)', 'https://flow.org/en/docs/types/objects/#toc-exact-object-types'),
+    ('Existential types (* syntax)', 'https://flow.org/en/docs/types/utilities/#toc-the-existential-type'),
     ('Functions', 'https://flow.org/en/docs/types/functions/'),
     ('Generics', 'https://flow.org/en/docs/types/generics/'),
     ('Interfaces', 'https://flow.org/en/docs/types/interfaces/'),
-    ('Intersection types', 'https://flow.org/en/docs/types/intersections/'),
+    ('Intersection types (& syntax)', 'https://flow.org/en/docs/types/intersections/'),
     ('Literal types', 'https://flow.org/en/docs/types/literals/'),
-    ('Maybe types', 'https://flow.org/en/docs/types/maybe/'),
+    ('Maybe types (? syntax)', 'https://flow.org/en/docs/types/maybe/'),
     ('Objects', 'https://flow.org/en/docs/types/objects/'),
     ('Opaque types', 'https://flow.org/en/docs/types/opaque-types/'),
     ('Tuples', 'https://flow.org/en/docs/types/tuples/'),
     ('Type aliases', 'https://flow.org/en/docs/types/aliases/'),
     ('Typeof', 'https://flow.org/en/docs/types/typeof/'),
-    ('Union types', 'https://flow.org/en/docs/types/unions/'),
+    ('Union types (| syntax)', 'https://flow.org/en/docs/types/unions/'),
     ('Variable types', 'https://flow.org/en/docs/types/variables/'),
 ]
+
 BUILTINS_PRIVATE = [
     ('$Abstract<T>', 'https://flow.org/en/docs/types/utilities/#toc-abstract'),
     ('$Diff<A, B>', 'https://flow.org/en/docs/types/utilities/#toc-diff'),
@@ -79,6 +81,18 @@ BUILTINS_PRIVATE = [
     ('$PropertyType<T, x>', 'https://flow.org/en/docs/types/utilities/#toc-propertytype'),
     # ('$Subtype<T>', 'https://flow.org/en/docs/types/utilities/#toc-subtype'),
     # ('$Supertype<T>', 'https://flow.org/en/docs/types/utilities/#toc-supertype'),
+]
+REACT_TYPES = [
+    ('ChildrenArray<T>', 'https://flow.org/en/docs/react/types/#toc-react-childrenarray'),
+    ('ComponentType<Props>', 'https://flow.org/en/docs/react/types/#toc-react-componenttype'),
+    ('Element<typeof Component>', 'https://flow.org/en/docs/react/types/#toc-react-element'),
+    ('ElementProps<typeof Component>', 'https://flow.org/en/docs/react/types/#toc-react-elementprops'),
+    ('ElementRef<typeof Component>', 'https://flow.org/en/docs/react/types/#toc-react-elementref'),
+    ('ElementType', 'https://flow.org/en/docs/react/types/#toc-react-elementtype'),
+    ('Key', 'https://flow.org/en/docs/react/types/#toc-react-key'),
+    ('Node', 'https://flow.org/en/docs/react/types/#toc-react-node'),
+    ('Ref<typeof Component>', 'https://flow.org/en/docs/react/types/#toc-react-ref'),
+    ('StatelessFunctionalComponent<Props>', 'https://flow.org/en/docs/react/types/#toc-react-statelessfunctionalcomponent'),
 ]
 PUBLISH_BASE_URL = '/flow-type-cheat-sheet'
 
@@ -291,16 +305,19 @@ def write_output(results):
                     base_url=PUBLISH_BASE_URL, slug=slug, version=version))
 
     fout = open(OUTPUT_FILE, 'w')
-    fout.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">\n')
+    fout.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">\n\n')
     fout.write('<p>\n')
-    fout.write('<a href="https://flow.org/">Flow</a> is a static type checker for JavaScript.\n')
+    fout.write('<a href="https://flow.org/"><strong>Flow</strong></a> is a static type checker for JavaScript.\n')
     fout.write('This is a list of Flow types generated from the source code in ')
     fout.write('<a href="{GITHUB_DIR}">{GITHUB_DIR}</a>\n'.format(GITHUB_DIR=GITHUB_DIR))
-    fout.write('The script to generate this list is on <a href="https://github.com/saltycrane/flow-cheatsheet">github</a>.\n')
+    fout.write('The script to generate this list is <a href="https://github.com/saltycrane/flow-cheatsheet">on github</a>.\n')
     fout.write('Fixes welcome.\n')
     fout.write('</p>\n')
-    fout.write('<p>Note: I created a separate section for "private" or "magic" types with a <code>$</code> in the name.\n')
-    fout.write('See the <a href="http://sitr.us/2015/05/31/advanced-features-in-flow.html">note here</a> and <a href="https://github.com/facebook/flow/issues/2197#issuecomment-238001710">comment here</a>. <em>Update</em>: Some these types are now <a href="https://flow.org/en/docs/types/utilities/">documented here</a>.</p>')
+    fout.write('<ul>\n')
+    fout.write('<li>There are separate sections for "private" or "magic" types with a <code>$</code> in the name.\n')
+    fout.write('See the <a href="http://sitr.us/2015/05/31/advanced-features-in-flow.html">note here</a> and <a href="https://github.com/facebook/flow/issues/2197#issuecomment-238001710">comment here</a>. <em>Update</em>: Some these types are now <a href="https://flow.org/en/docs/types/utilities/"><strong>documented here</strong></a>.</li>')
+    fout.write('<li>Links in <strong>bold</strong> point to the Flow documentation. Other links point to the Flow source code.</li>\n')
+    fout.write('</ul>\n')
     fout.write('<p>Flow version: {versions}</p>\n'.format(versions=''.join(version_list)))
     fout.write('<h4 id="contents">Contents</h4>\n')
     fout.write('<ul class="list-unstyled">\n')
@@ -315,7 +332,7 @@ def write_output(results):
         if not file_results:
             continue
 
-        lines = generate_output_lines(file_results)
+        lines = generate_output_lines(file_results, id_attr)
         grouped = group_in_columns(lines)
 
         fout.write('<div class="panel panel-default">\n')
@@ -344,7 +361,7 @@ def write_output(results):
     fout.close()
 
 
-def generate_output_lines(results):
+def generate_output_lines(results, id_attr):
     """generate html output lines to write given a list of results
     """
     output = []
@@ -352,38 +369,53 @@ def generate_output_lines(results):
         if len(result) == 2:
             # result is a built-in result
             name, url = result
-            link = generate_alink(name, url, None)
+            link = generate_alink(name, url, None, None, True)
             output.append('<li>{link}</li>'.format(link=link))
         else:
-            lines = generate_result(result)
+            # result is parsed from /lib file
+            lines = generate_result(result, id_attr)
             output.extend(lines)
     return output
 
 
-def generate_result(result):
+def generate_result(result, id_attr):
     """recursively generate html lines to write starting at a single result
     """
     lines = []
     name, line_no, members, filename, type = result
     url = create_github_url(line_no, filename)
     if members:
-        link = generate_alink(name, url, type)
+        link = generate_alink(name, url, type, id_attr)
         lines.append('<li>{link}<ul>'.format(link=link))
         for child_result in members:
-            child_lines = generate_result(child_result)
+            child_lines = generate_result(child_result, id_attr)
             lines.extend(child_lines)
         # mutate list so that <ul> tags don't count as items in the list when grouping columns
         lines[-1] = '{last_line}</ul></li>'.format(last_line=lines[-1])
     else:
-        link = generate_alink(name, url, type)
+        link = generate_alink(name, url, type, id_attr)
         lines.append('<li>{link}</li>'.format(link=link))
     return lines
 
 
-def generate_alink(name, url, type=None):
+def generate_alink(name, url, type=None, id_attr=None, from_docs=False):
     """return html for a single <a> link
     """
-    alink = '<a href="{url}">{name}</a>'.format(url=url, name=html_escape(name))
+    if id_attr == 'lib/react.js':
+        parts = name.split('<')
+        base_name = parts[0]
+        for name_docs, url_docs in REACT_TYPES:
+            parts = name_docs.split('<')
+            base_name_docs = parts[0]
+            if base_name == base_name_docs:
+                alink = '<a href="{url_docs}"><strong>{name_docs}</strong></a> <small><a href="{url}">({type})</a></small>'.format(
+                    url_docs=url_docs, name_docs=html_escape(name_docs), url=url, type=type)
+                return alink
+
+    if from_docs:
+        alink = '<a href="{url}"><strong>{name}</strong></a>'.format(url=url, name=html_escape(name))
+    else:
+        alink = '<a href="{url}">{name}</a>'.format(url=url, name=html_escape(name))
     if type:
         alink += ' <small>({type})</small>'.format(type=type)
     return alink
