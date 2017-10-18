@@ -21,6 +21,7 @@ PUBLISH_URL = None
 
 # Constants
 COMMITS = [
+    'v0.57.3',
     'v0.56.0',
     'v0.55.0',
     'v0.54.0',
