@@ -38,6 +38,7 @@ COMMITS = [
 FILES = [
     ('lib/core.js', 'Core'),
     ('lib/react.js', 'React'),
+    ('lib/react-dom.js', 'React DOM'),
     ('lib/dom.js', 'Document Object Model (DOM)'),
     ('lib/bom.js', 'Browser Object Model (BOM)'),
     ('lib/cssom.js', 'CSS Object Model (CSSOM)'),
