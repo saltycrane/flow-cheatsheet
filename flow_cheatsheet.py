@@ -21,6 +21,7 @@ PUBLISH_URL = None
 
 # Constants
 COMMITS = [
+    'v0.65.0',
     'v0.64.0',
     'v0.63.1',
     'v0.62.0',
@@ -69,7 +70,7 @@ BUILTINS = [
     ('Exact objects ({||} syntax)', 'https://flow.org/en/docs/types/objects/#toc-exact-object-types'),
     ('Existential types (* syntax)', 'https://flow.org/en/docs/types/utilities/#toc-the-existential-type'),
     ('Functions', 'https://flow.org/en/docs/types/functions/'),
-    ('Generics (aka Polymorphics)', 'https://flow.org/en/docs/types/generics/'),
+    ('Generics (aka Polymorphic or Abstract types)', 'https://flow.org/en/docs/types/generics/'),
     ('Interfaces', 'https://flow.org/en/docs/types/interfaces/'),
     ('Intersection types (& syntax)', 'https://flow.org/en/docs/types/intersections/'),
     ('Literal types', 'https://flow.org/en/docs/types/literals/'),
