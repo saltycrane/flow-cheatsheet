@@ -263,6 +263,11 @@ def parse_file(body, filename):
             appender.append(Result(match.group('type'), line_no, None, filename, "type"))
             continue
 
+        match = re.search('^' + indentation + r'(declare )?(export )?opaque type (?P<type>.+);', line)
+        if match:
+            appender.append(Result(match.group('type'), line_no, None, filename, "opaque type"))
+            continue
+
     return results
 
 
