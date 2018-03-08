@@ -21,6 +21,7 @@ PUBLISH_URL = None
 
 # Constants
 COMMITS = [
+    'v0.67.0',
     'v0.66.0',
     'v0.65.0',
     'v0.64.0',
@@ -149,7 +150,7 @@ def get_builtin_magic_results():
                 '$All', '$Diff', '$Either', '$Exact', '$Keys', '$ObjectMap',
                 '$PropertyType', '$Tuple', '$Type',
         ))]
-    results += BUILTINS_PRIVATE;
+    results += BUILTINS_PRIVATE
     results = sorted(results, key=lambda result: result[0].lower())
 
     return [('builtins-private', 'Built-in "private" types', results)]
