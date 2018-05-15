@@ -75,7 +75,7 @@ BUILTINS = [
     ('Class<T>', 'https://flow.org/en/docs/types/utilities/#toc-class'),
     ('Classes', 'https://flow.org/en/docs/types/classes/'),
     ('Exact objects ({||} syntax)', 'https://flow.org/en/docs/types/objects/#toc-exact-object-types'),
-    ('Existential types (* syntax)', 'https://flow.org/en/docs/types/utilities/#toc-the-existential-type'),
+    ('Existential types (* syntax)', 'https://flow.org/en/docs/types/utilities/#toc-existential-type'),
     ('Functions', 'https://flow.org/en/docs/types/functions/'),
     ('Generics (aka Polymorphic or Abstract types)', 'https://flow.org/en/docs/types/generics/'),
     ('Interfaces', 'https://flow.org/en/docs/types/interfaces/'),
@@ -92,7 +92,7 @@ BUILTINS = [
 ]
 
 BUILTINS_PRIVATE = [
-    ('$Abstract<T>', 'https://flow.org/en/docs/types/utilities/#toc-abstract'),
+    # ('$Abstract<T>', 'https://flow.org/en/docs/types/utilities/#toc-abstract'),
     ('$Diff<A, B>', 'https://flow.org/en/docs/types/utilities/#toc-diff'),
     ('$Exact<T>', 'https://flow.org/en/docs/types/utilities/#toc-exact'),
     ('$Keys<T>', 'https://flow.org/en/docs/types/utilities/#toc-keys'),
