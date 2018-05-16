@@ -1,12 +1,16 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
 <p>
-<a href="https://flow.org/">Flow</a> is a static type checker for JavaScript.
+<a href="https://flow.org/"><strong>Flow</strong></a> is a static type checker for JavaScript.
 This is a list of Flow types generated from the source code in <a href="https://github.com/facebook/flow/tree/v0.52.0/">https://github.com/facebook/flow/tree/v0.52.0/</a>
-The script to generate this list is on <a href="https://github.com/saltycrane/flow-cheatsheet">github</a>.
+The script to generate this list is <a href="https://github.com/saltycrane/flow-cheatsheet">on github</a>.
 Fixes welcome.
 </p>
-<p>Note: I created a separate section for "private" or "magic" types with a <code>$</code> in the name.
-See the <a href="http://sitr.us/2015/05/31/advanced-features-in-flow.html">note here</a> and <a href="https://github.com/facebook/flow/issues/2197#issuecomment-238001710">comment here</a>. <em>Update</em>: Some these types are now <a href="https://flow.org/en/docs/types/utilities/">documented here</a>.</p><p>Flow version:  <a href="/flow-type-cheat-sheet/latest/">v0.54.0</a> <a href="/flow-type-cheat-sheet/v0.53.1/">v0.53.1</a> <strong style="font-size: 120%">v0.52.0</strong> <a href="/flow-type-cheat-sheet/v0.51.1/">v0.51.1</a> <a href="/flow-type-cheat-sheet/v0.50.0/">v0.50.0</a> <a href="/flow-type-cheat-sheet/v0.49.1/">v0.49.1</a> <a href="/flow-type-cheat-sheet/v0.48.0/">v0.48.0</a> <a href="/flow-type-cheat-sheet/v0.47.0/">v0.47.0</a> <a href="/flow-type-cheat-sheet/v0.46.0/">v0.46.0</a> <a href="/flow-type-cheat-sheet/v0.45.0/">v0.45.0</a></p>
+<ul>
+<li>There are separate sections for "private" or "magic" types with a <code>$</code> in the name.
+See the <a href="http://sitr.us/2015/05/31/advanced-features-in-flow.html">note here</a> and <a href="https://github.com/facebook/flow/issues/2197#issuecomment-238001710">comment here</a>. <em>Update</em>: Some these types are now <a href="https://flow.org/en/docs/types/utilities/"><strong>documented here</strong></a>.</li><li>Links in <strong>bold</strong> point to the Flow documentation. Other links point to the Flow source code.</li>
+</ul>
+<p>Flow version:  <a href="/flow-type-cheat-sheet/latest/">v0.72.0</a> <a href="/flow-type-cheat-sheet/v0.71.0/">v0.71.0</a> <a href="/flow-type-cheat-sheet/v0.70.0/">v0.70.0</a> <a href="/flow-type-cheat-sheet/v0.69.0/">v0.69.0</a> <a href="/flow-type-cheat-sheet/v0.68.0/">v0.68.0</a> <a href="/flow-type-cheat-sheet/v0.67.0/">v0.67.0</a> <a href="/flow-type-cheat-sheet/v0.66.0/">v0.66.0</a> <a href="/flow-type-cheat-sheet/v0.65.0/">v0.65.0</a> <a href="/flow-type-cheat-sheet/v0.64.0/">v0.64.0</a> <a href="/flow-type-cheat-sheet/v0.63.1/">v0.63.1</a> <a href="/flow-type-cheat-sheet/v0.62.0/">v0.62.0</a> <a href="/flow-type-cheat-sheet/v0.61.0/">v0.61.0</a> <a href="/flow-type-cheat-sheet/v0.60.1/">v0.60.1</a> <a href="/flow-type-cheat-sheet/v0.59.0/">v0.59.0</a> <a href="/flow-type-cheat-sheet/v0.58.0/">v0.58.0</a> <a href="/flow-type-cheat-sheet/v0.57.3/">v0.57.3</a> <a href="/flow-type-cheat-sheet/v0.56.0/">v0.56.0</a> <a href="/flow-type-cheat-sheet/v0.55.0/">v0.55.0</a> <a href="/flow-type-cheat-sheet/v0.54.0/">v0.54.0</a> <a href="/flow-type-cheat-sheet/v0.53.1/">v0.53.1</a> <strong style="font-size: 120%">v0.52.0</strong> <a href="/flow-type-cheat-sheet/v0.51.1/">v0.51.1</a> <a href="/flow-type-cheat-sheet/v0.50.0/">v0.50.0</a> <a href="/flow-type-cheat-sheet/v0.49.1/">v0.49.1</a> <a href="/flow-type-cheat-sheet/v0.48.0/">v0.48.0</a> <a href="/flow-type-cheat-sheet/v0.47.0/">v0.47.0</a> <a href="/flow-type-cheat-sheet/v0.46.0/">v0.46.0</a> <a href="/flow-type-cheat-sheet/v0.45.0/">v0.45.0</a></p>
 <h4 id="contents">Contents</h4>
 <ul class="list-unstyled">
   <li><a href="#builtins">Built-in types</a></li>  <li><a href="#lib/core.js">Core</a></li>
@@ -24,35 +28,37 @@ See the <a href="http://sitr.us/2015/05/31/advanced-features-in-flow.html">note 
 <div class="panel-body">
 <div class="row">
 <div class="col-sm-4"><ul>
-<li><a href="https://flow.org/en/docs/types/utilities/#toc-the-existential-type">* (Existential type)</a></li>
-<li><a href="https://flow.org/en/docs/types/any/">any</a></li>
-<li><a href="https://flow.org/en/docs/types/primitives/#toc-booleans">boolean</a></li>
-<li><a href="https://flow.org/en/docs/types/primitives/#toc-null-and-void">null</a></li>
-<li><a href="https://flow.org/en/docs/types/primitives/#toc-numbers">number</a></li>
-<li><a href="https://flow.org/en/docs/types/mixed/">mixed</a></li>
-<li><a href="https://flow.org/en/docs/types/primitives/#toc-strings">string</a></li>
-<li><a href="https://flow.org/en/docs/types/primitives/#toc-null-and-void">void</a></li>
-<li><a href="https://flow.org/en/docs/types/arrays/">Arrays</a></li>
+<li><a href="https://flow.org/en/docs/types/any/"><strong>any</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/primitives/#toc-booleans"><strong>boolean</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/primitives/#toc-null-and-void"><strong>null</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/primitives/#toc-numbers"><strong>number</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/mixed/"><strong>mixed</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/primitives/#toc-strings"><strong>string</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/primitives/#toc-null-and-void"><strong>void</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/arrays/"><strong>Arrays ([] syntax)</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/utilities/#toc-class"><strong>Class&lt;T&gt;</strong></a></li>
 </ul></div>
 <div class="col-sm-4"><ul>
-<li><a href="https://flow.org/en/docs/types/utilities/#toc-class">Class&lt;T&gt;</a></li>
-<li><a href="https://flow.org/en/docs/types/classes/">Classes</a></li>
-<li><a href="https://flow.org/en/docs/types/objects/#toc-exact-object-types">Exact objects ({||} syntax)</a></li>
-<li><a href="https://flow.org/en/docs/types/functions/">Functions</a></li>
-<li><a href="https://flow.org/en/docs/types/generics/">Generics</a></li>
-<li><a href="https://flow.org/en/docs/types/interfaces/">Interfaces</a></li>
-<li><a href="https://flow.org/en/docs/types/intersections/">Intersection types</a></li>
-<li><a href="https://flow.org/en/docs/types/literals/">Literal types</a></li>
-<li><a href="https://flow.org/en/docs/types/maybe/">Maybe types</a></li>
+<li><a href="https://flow.org/en/docs/types/classes/"><strong>Classes</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/interfaces/#toc-covariant-read-only-properties-on-interfaces"><strong>Covariant (read-only) (+ syntax)</strong></a> <small><em>(<a href="https://github.com/facebook/flow/releases/tag/v0.34.0">since v0.34.0</a>)</em></small></li>
+<li><a href="https://flow.org/en/docs/types/interfaces/#toc-contravariant-write-only-properties-on-interfaces"><strong>Contravariant (write-only) (- syntax)</strong></a> <small><em>(<a href="https://github.com/facebook/flow/releases/tag/v0.34.0">since v0.34.0</a>)</em></small></li>
+<li><a href="https://flow.org/en/docs/types/objects/#toc-exact-object-types"><strong>Exact objects ({||} syntax)</strong></a> <small><em>(<a href="https://github.com/facebook/flow/releases/tag/v0.32.0">since v0.32.0</a>)</em></small></li>
+<li><a href="https://flow.org/en/docs/types/utilities/#toc-existential-type"><strong>Existential types (* syntax)</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/functions/"><strong>Functions</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/generics/"><strong>Generics (Polymorphic or Abstract types) (&lt;&gt; syntax)</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/interfaces/"><strong>Interfaces</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/intersections/"><strong>Intersection types (&amp; syntax)</strong></a></li>
 </ul></div>
 <div class="col-sm-4"><ul>
-<li><a href="https://flow.org/en/docs/types/objects/">Objects</a></li>
-<li><a href="https://flow.org/en/docs/types/opaque-types/">Opaque types</a></li>
-<li><a href="https://flow.org/en/docs/types/tuples/">Tuples</a></li>
-<li><a href="https://flow.org/en/docs/types/aliases/">Type aliases</a></li>
-<li><a href="https://flow.org/en/docs/types/typeof/">Typeof</a></li>
-<li><a href="https://flow.org/en/docs/types/unions/">Union types</a></li>
-<li><a href="https://flow.org/en/docs/types/variables/">Variable types</a></li>
+<li><a href="https://flow.org/en/docs/types/literals/"><strong>Literal types</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/maybe/"><strong>Maybe types (? syntax)</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/objects/"><strong>Objects</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/opaque-types/"><strong>Opaque types</strong></a> <small><em>(<a href="https://github.com/facebook/flow/releases/tag/v0.51.0">since v0.51.0</a>)</em></small></li>
+<li><a href="https://flow.org/en/docs/types/tuples/"><strong>Tuples</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/aliases/"><strong>Type aliases</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/typeof/"><strong>Typeof</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/unions/"><strong>Union types (| syntax)</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/variables/"><strong>Variable types</strong></a></li>
 </ul></div>
 </div></div></div>
 <div class="panel panel-default">
@@ -60,24 +66,26 @@ See the <a href="http://sitr.us/2015/05/31/advanced-features-in-flow.html">note 
 <div class="panel-body">
 <div class="row">
 <div class="col-sm-4"><ul>
-<li><a href="https://flow.org/en/docs/types/utilities/#toc-abstract">$Abstract&lt;T&gt;</a></li>
-<li><a href="https://flow.org/en/docs/types/utilities/#toc-diff">$Diff&lt;A, B&gt;</a></li>
-<li><a href="https://github.com/facebook/flow/tree/v0.52.0/src/typing/type_annotation.ml#L242">$ElementType&lt;T, string&gt; acts as the type of the string elements in object</a></li>
-<li><a href="https://flow.org/en/docs/types/utilities/#toc-exact">$Exact&lt;T&gt;</a></li>
+<li><a href="https://github.com/facebook/flow/tree/v0.52.0/src/typing/type_annotation.ml#L194">$All&lt;...T&gt; is the intersection of types ...T </a></li>
+<li><a href="https://flow.org/en/docs/types/utilities/#toc-diff"><strong>$Diff&lt;A, B&gt;</strong></a></li>
+<li><a href="https://github.com/facebook/flow/tree/v0.52.0/src/typing/type_annotation.ml#L185">$Either&lt;...T&gt; is the union of types ...T </a></li>
+<li><a href="https://flow.org/en/docs/types/utilities/#toc-elementtype"><strong>$ElementType&lt;T, K&gt;</strong></a> <small><em>(<a href="https://github.com/facebook/flow/releases/tag/v0.49.0">since v0.49.0</a>)</em></small></li>
+<li><a href="https://flow.org/en/docs/types/utilities/#toc-exact"><strong>$Exact&lt;T&gt;</strong></a></li>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/src/typing/type_annotation.ml#L300">$Exports&lt;'M'&gt; is the type of the exports of module 'M' </a></li>
 </ul></div>
 <div class="col-sm-4"><ul>
-<li><a href="https://flow.org/en/docs/types/utilities/#toc-keys">$Keys&lt;T&gt;</a></li>
+<li><a href="https://flow.org/en/docs/types/utilities/#toc-keys"><strong>$Keys&lt;T&gt;</strong></a></li>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/src/typing/type_annotation.ml#L253">$NonMaybeType&lt;T&gt; acts as the type T without null and void </a></li>
-<li><a href="https://flow.org/en/docs/types/utilities/#toc-objmap">$ObjMap&lt;T, F&gt;</a></li>
-<li><a href="https://flow.org/en/docs/types/utilities/#toc-propertytype">$PropertyType&lt;T, x&gt;</a></li>
-<li><a href="https://github.com/facebook/flow/tree/v0.52.0/src/typing/type_annotation.ml#L203">$ReadOnlyArray&lt;T&gt; is the supertype of all tuples and all arrays </a></li>
-</ul></div>
-<div class="col-sm-4"><ul>
+<li><a href="https://flow.org/en/docs/types/utilities/#toc-objmap"><strong>$ObjMap&lt;T, F&gt;</strong></a></li>
+<li><a href="https://flow.org/en/docs/types/utilities/#toc-propertytype"><strong>$PropertyType&lt;T, k&gt;</strong></a></li>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/src/typing/type_annotation.ml#L261">$Shape&lt;T&gt; matches the shape of T </a></li>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/src/typing/type_annotation.ml#L217">$Subtype&lt;T&gt; acts as any over subtypes of T </a></li>
+</ul></div>
+<div class="col-sm-4"><ul>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/src/typing/type_annotation.ml#L210">$Supertype&lt;T&gt; acts as any over supertypes of T </a></li>
-<li><a href="https://github.com/facebook/flow/tree/v0.52.0/src/typing/type_annotation.ml#L285">$Values&lt;T&gt; is a union of all the own enumerable value types of T </a></li>
+<li><a href="https://flow.org/en/docs/types/utilities/#toc-tuplemap"><strong>$TupleMap&lt;T, F&gt;</strong></a></li>
+<li><a href="https://github.com/facebook/flow/tree/v0.52.0/src/typing/type_annotation.ml#L224">$Type&lt;T&gt; acts as the type of T </a></li>
+<li><a href="https://flow.org/en/docs/types/utilities/#toc-values"><strong>$Values&lt;T&gt;</strong></a> <small><em>(<a href="https://github.com/facebook/flow/releases/tag/v0.50.0">since v0.50.0</a>)</em></small></li>
 </ul></div>
 </div></div></div>
 <div class="panel panel-default">
@@ -183,8 +191,8 @@ See the <a href="http://sitr.us/2015/05/31/advanced-features-in-flow.html">note 
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L180">createClass</a> <small>(var)</small></li>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L195">createElement</a> <small>(var)</small></li>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L166">DOM</a> <small>(var)</small></li>
-<li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L206">Element</a> <small>(var)</small></li>
-<li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L208">Node</a> <small>(type)</small></li>
+<li><a href="https://flow.org/en/docs/react/types/#toc-react-element"><strong>Element&lt;typeof Component&gt;</strong></a> <small><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L206">(var)</a></small></li>
+<li><a href="https://flow.org/en/docs/react/types/#toc-react-node"><strong>Node</strong></a> <small><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L208">(type)</a></small></li>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L167">PropTypes</a> <small>(var)</small></li>
 <li><a href="https://github.com/facebook/flow/tree/v0.52.0/lib/react.js#L205">PureComponent</a> <small>(var)</small></li>
 </ul></ul></div>
