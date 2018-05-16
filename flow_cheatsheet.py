@@ -11,13 +11,11 @@ from collections import namedtuple
 
 
 Result = namedtuple('Result', ['name', 'line_no', 'members', 'filename', 'type'])
+Version = namedtuple('Version', ['minor'])
 
 # Global variables set by main()
-COMMIT = None
 GITHUB_DIR = None
 RAW_DIR = None
-OUTPUT_FILE = None
-PUBLISH_URL = None
 
 # Constants
 COMMITS = [
@@ -50,57 +48,68 @@ COMMITS = [
     'v0.46.0',
     'v0.45.0',
 ]
+
 FILES = [
-    ('lib/core.js', 'Core'),
-    ('lib/react.js', 'React'),
-    ('lib/react-dom.js', 'React DOM'),
-    ('lib/dom.js', 'Document Object Model (DOM)'),
-    ('lib/bom.js', 'Browser Object Model (BOM)'),
-    ('lib/cssom.js', 'CSS Object Model (CSSOM)'),
-    ('lib/indexeddb.js', 'indexedDB'),
-    ('lib/node.js', 'Node.js'),
-    ('lib/serviceworkers.js', 'Service Workers'),
-    ('lib/streams.js', 'Streams'),
+    ('lib/core.js', 'Core', None),
+    ('lib/react.js', 'React', None),
+    ('lib/react-dom.js', 'React DOM', Version(55)),
+    ('lib/dom.js', 'Document Object Model (DOM)', None),
+    ('lib/bom.js', 'Browser Object Model (BOM)', None),
+    ('lib/cssom.js', 'CSS Object Model (CSSOM)', None),
+    ('lib/indexeddb.js', 'indexedDB', None),
+    ('lib/node.js', 'Node.js', None),
+    ('lib/serviceworkers.js', 'Service Workers', None),
+    ('lib/streams.js', 'Streams', None),
+    ('lib/intl.js', 'International', Version(72)),
 ]
 
 BUILTINS = [
-    ('any', 'https://flow.org/en/docs/types/any/'),
-    ('boolean', 'https://flow.org/en/docs/types/primitives/#toc-booleans'),
-    ('null', 'https://flow.org/en/docs/types/primitives/#toc-null-and-void'),
-    ('number', 'https://flow.org/en/docs/types/primitives/#toc-numbers'),
-    ('mixed', 'https://flow.org/en/docs/types/mixed/'),
-    ('string', 'https://flow.org/en/docs/types/primitives/#toc-strings'),
-    ('void', 'https://flow.org/en/docs/types/primitives/#toc-null-and-void'),
-    ('Arrays ([] syntax)', 'https://flow.org/en/docs/types/arrays/'),
-    ('Class<T>', 'https://flow.org/en/docs/types/utilities/#toc-class'),
-    ('Classes', 'https://flow.org/en/docs/types/classes/'),
-    ('Exact objects ({||} syntax)', 'https://flow.org/en/docs/types/objects/#toc-exact-object-types'),
-    ('Existential types (* syntax)', 'https://flow.org/en/docs/types/utilities/#toc-existential-type'),
-    ('Functions', 'https://flow.org/en/docs/types/functions/'),
-    ('Generics (aka Polymorphic or Abstract types)', 'https://flow.org/en/docs/types/generics/'),
-    ('Interfaces', 'https://flow.org/en/docs/types/interfaces/'),
-    ('Intersection types (& syntax)', 'https://flow.org/en/docs/types/intersections/'),
-    ('Literal types', 'https://flow.org/en/docs/types/literals/'),
-    ('Maybe types (? syntax)', 'https://flow.org/en/docs/types/maybe/'),
-    ('Objects', 'https://flow.org/en/docs/types/objects/'),
-    ('Opaque types', 'https://flow.org/en/docs/types/opaque-types/'),
-    ('Tuples', 'https://flow.org/en/docs/types/tuples/'),
-    ('Type aliases', 'https://flow.org/en/docs/types/aliases/'),
-    ('Typeof', 'https://flow.org/en/docs/types/typeof/'),
-    ('Union types (| syntax)', 'https://flow.org/en/docs/types/unions/'),
-    ('Variable types', 'https://flow.org/en/docs/types/variables/'),
+    ('any', 'https://flow.org/en/docs/types/any/', None),
+    ('boolean', 'https://flow.org/en/docs/types/primitives/#toc-booleans', None),
+    ('null', 'https://flow.org/en/docs/types/primitives/#toc-null-and-void', None),
+    ('number', 'https://flow.org/en/docs/types/primitives/#toc-numbers', None),
+    ('mixed', 'https://flow.org/en/docs/types/mixed/', None),
+    ('string', 'https://flow.org/en/docs/types/primitives/#toc-strings', None),
+    ('void', 'https://flow.org/en/docs/types/primitives/#toc-null-and-void', None),
+    ('Arrays ([] syntax)', 'https://flow.org/en/docs/types/arrays/', None),
+    ('Class<T>', 'https://flow.org/en/docs/types/utilities/#toc-class', None),
+    ('Classes', 'https://flow.org/en/docs/types/classes/', None),
+    ('Covariant (read-only) (+ syntax)', 'https://flow.org/en/docs/types/interfaces/#toc-covariant-read-only-properties-on-interfaces', Version(34)),
+    ('Contravariant (write-only) (- syntax)', 'https://flow.org/en/docs/types/interfaces/#toc-contravariant-write-only-properties-on-interfaces', Version(34)),
+    ('Exact objects ({||} syntax)', 'https://flow.org/en/docs/types/objects/#toc-exact-object-types', Version(32)),
+    ('Existential types (* syntax)', 'https://flow.org/en/docs/types/utilities/#toc-existential-type', None),
+    ('Functions', 'https://flow.org/en/docs/types/functions/', None),
+    ('Generics (Polymorphic or Abstract types) (<> syntax)', 'https://flow.org/en/docs/types/generics/', None),
+    ('Interfaces', 'https://flow.org/en/docs/types/interfaces/', None),
+    ('Intersection types (& syntax)', 'https://flow.org/en/docs/types/intersections/', None),
+    ('Literal types', 'https://flow.org/en/docs/types/literals/', None),
+    ('Maybe types (? syntax)', 'https://flow.org/en/docs/types/maybe/', None),
+    ('Objects', 'https://flow.org/en/docs/types/objects/', None),
+    ('Opaque types', 'https://flow.org/en/docs/types/opaque-types/', Version(51)),
+    ('Tuples', 'https://flow.org/en/docs/types/tuples/', None),
+    ('Type aliases', 'https://flow.org/en/docs/types/aliases/', None),
+    ('Typeof', 'https://flow.org/en/docs/types/typeof/', None),
+    ('Union types (| syntax)', 'https://flow.org/en/docs/types/unions/', None),
+    ('Variable types', 'https://flow.org/en/docs/types/variables/', None),
 ]
 
 BUILTINS_PRIVATE = [
-    # ('$Abstract<T>', 'https://flow.org/en/docs/types/utilities/#toc-abstract'),
-    ('$Diff<A, B>', 'https://flow.org/en/docs/types/utilities/#toc-diff'),
-    ('$Exact<T>', 'https://flow.org/en/docs/types/utilities/#toc-exact'),
-    ('$Keys<T>', 'https://flow.org/en/docs/types/utilities/#toc-keys'),
-    ('$ObjMap<T, F>', 'https://flow.org/en/docs/types/utilities/#toc-objmap'),
-    ('$PropertyType<T, x>', 'https://flow.org/en/docs/types/utilities/#toc-propertytype'),
-    # ('$Subtype<T>', 'https://flow.org/en/docs/types/utilities/#toc-subtype'),
-    # ('$Supertype<T>', 'https://flow.org/en/docs/types/utilities/#toc-supertype'),
+    # ('$Abstract<T>', 'https://flow.org/en/docs/types/utilities/#toc-abstract', None),
+    ('$Call<F>', 'https://flow.org/en/docs/types/utilities/#toc-call', Version(55)),
+    ('$Diff<A, B>', 'https://flow.org/en/docs/types/utilities/#toc-diff', None),
+    ('$ElementType<T, K>', 'https://flow.org/en/docs/types/utilities/#toc-elementtype', Version(49)),
+    ('$Exact<T>', 'https://flow.org/en/docs/types/utilities/#toc-exact', None),
+    ('$Keys<T>', 'https://flow.org/en/docs/types/utilities/#toc-keys', None),
+    ('$ObjMap<T, F>', 'https://flow.org/en/docs/types/utilities/#toc-objmap', None),
+    ('$PropertyType<T, k>', 'https://flow.org/en/docs/types/utilities/#toc-propertytype', None),
+    ('$ReadOnly<T>', 'https://flow.org/en/docs/types/utilities/#toc-readonly', Version(59)),
+    ('$Rest<A, B>', 'https://flow.org/en/docs/types/utilities/#toc-rest', Version(56)),
+    # ('$Subtype<T>', 'https://flow.org/en/docs/types/utilities/#toc-subtype', None),
+    # ('$Supertype<T>', 'https://flow.org/en/docs/types/utilities/#toc-supertype', None),
+    ('$TupleMap<T, F>', 'https://flow.org/en/docs/types/utilities/#toc-tuplemap', None),
+    ('$Values<T>', 'https://flow.org/en/docs/types/utilities/#toc-values', Version(50)),
 ]
+
 REACT_TYPES = [
     ('ChildrenArray<T>', 'https://flow.org/en/docs/react/types/#toc-react-childrenarray'),
     ('ComponentType<Props>', 'https://flow.org/en/docs/react/types/#toc-react-componenttype'),
@@ -117,21 +126,18 @@ PUBLISH_BASE_URL = '/flow-type-cheat-sheet'
 
 
 def main():
-    global COMMIT
     global GITHUB_DIR
     global RAW_DIR
-    global OUTPUT_FILE
 
     for commit in COMMITS:
-        COMMIT = commit
-        GITHUB_DIR = 'https://github.com/facebook/flow/tree/{commit}/'.format(commit=COMMIT)
-        RAW_DIR = 'https://raw.githubusercontent.com/facebook/flow/{commit}/'.format(commit=COMMIT)
-        OUTPUT_FILE = 'dist/{commit}.html'.format(commit=COMMIT)
+        GITHUB_DIR = 'https://github.com/facebook/flow/tree/{commit}/'.format(commit=commit)
+        RAW_DIR = 'https://raw.githubusercontent.com/facebook/flow/{commit}/'.format(commit=commit)
 
         builtin_results = [('builtins', 'Built-ins', BUILTINS)]
         builtin_magic_results = get_builtin_magic_results()
-        lib_results = get_lib_results()
-        write_output(builtin_results + builtin_magic_results + lib_results)
+        lib_results = get_lib_results(commit)
+        results = builtin_results + builtin_magic_results + lib_results
+        write_output(results, commit)
 
 
 def get_builtin_magic_results():
@@ -149,21 +155,26 @@ def get_builtin_magic_results():
             results.append(Result(name, line_no, None, FILENAME, None))
 
     # post-process results
-    results = [
-        result for result in results
-        if not result.name.startswith((
-                '$All', '$Diff', '$Either', '$Exact', '$Keys', '$ObjectMap',
-                '$PropertyType', '$Tuple', '$Type',
-        ))]
+    def is_documented(type_name):
+        documented_builtin_names = [x[0] for x in BUILTINS_PRIVATE]
+        documented_builtin_names = [x.split('<')[0] for x in documented_builtin_names]
+        return type_name.startswith(tuple(documented_builtin_names))
+
+    results = [x for x in results if not is_documented(x.name)]
     results += BUILTINS_PRIVATE
     results = sorted(results, key=lambda result: result[0].lower())
 
     return [('builtins-private', 'Built-in "private" types', results)]
 
 
-def get_lib_results():
+def get_lib_results(commit):
+    cheatsheet_version_minor = parse_version_string(commit)
     results = []
-    for filename, heading in FILES:
+    for filename, heading, min_version in FILES:
+        if min_version and cheatsheet_version_minor < min_version.minor:
+            print "cheatsheet version:", cheatsheet_version_minor, "is less than feature min version:", min_version, "skipping..."
+            continue
+
         url = os.path.join(RAW_DIR, filename)
         print url
         body = download_file(url)
@@ -311,7 +322,7 @@ def post_process(results):
     return results
 
 
-def write_output(results):
+def write_output(results, commit):
     version_list = []
     for index, version in enumerate(COMMITS):
         if index == 0:
@@ -319,7 +330,7 @@ def write_output(results):
         else:
             slug = version
 
-        if version == COMMIT:
+        if version == commit:
             version_list.append(
                 ' <strong style="font-size: 120%">{version}</strong>'.format(
                     version=version))
@@ -328,6 +339,7 @@ def write_output(results):
                 ' <a href="{base_url}/{slug}/">{version}</a>'.format(
                     base_url=PUBLISH_BASE_URL, slug=slug, version=version))
 
+    OUTPUT_FILE = 'dist/{commit}.html'.format(commit=commit)
     fout = open(OUTPUT_FILE, 'w')
     fout.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">\n\n')
     fout.write('<p>\n')
@@ -346,7 +358,13 @@ def write_output(results):
     fout.write('<h4 id="contents">Contents</h4>\n')
     fout.write('<ul class="list-unstyled">\n')
     fout.write('  <li><a href="#builtins">Built-in types</a></li>')
-    for filename, heading in FILES:
+
+    cheatsheet_version_minor = parse_version_string(commit)
+    for filename, heading, min_version in FILES:
+        if min_version and cheatsheet_version_minor < min_version.minor:
+            print "cheatsheet version:", cheatsheet_version_minor, "is less than feature min version:", min_version, "skipping..."
+            continue
+
         fout.write('  <li><a href="#{filename}">{heading}</a></li>\n'.format(
             filename=filename, heading=heading))
     fout.write('</ul>\n')
@@ -356,7 +374,7 @@ def write_output(results):
         if not file_results:
             continue
 
-        lines = generate_output_lines(file_results, id_attr)
+        lines = generate_output_lines(file_results, id_attr, commit)
         grouped = group_in_columns(lines)
 
         fout.write('<div class="panel panel-default">\n')
@@ -385,15 +403,22 @@ def write_output(results):
     fout.close()
 
 
-def generate_output_lines(results, id_attr):
+def generate_output_lines(results, id_attr, commit):
     """generate html output lines to write given a list of results
     """
+    cheatsheet_version_minor = parse_version_string(commit)
+
     output = []
     for result in results:
-        if len(result) == 2:
+        if len(result) <= 3:
             # result is a built-in result
-            name, url = result
-            link = generate_alink(name, url, None, None, True)
+            name, url, min_version = result
+
+            if min_version and cheatsheet_version_minor < min_version.minor:
+                print "cheatsheet version:", cheatsheet_version_minor, "is less than feature min version:", min_version, "skipping..."
+                continue
+
+            link = generate_alink(name, url, None, None, True, min_version)
             output.append('<li>{link}</li>'.format(link=link))
         else:
             # result is parsed from /lib file
@@ -422,7 +447,7 @@ def generate_result(result, id_attr):
     return lines
 
 
-def generate_alink(name, url, type=None, id_attr=None, from_docs=False):
+def generate_alink(name, url, type=None, id_attr=None, from_docs=False, min_version=None):
     """return html for a single <a> link
     """
     if id_attr == 'lib/react.js':
@@ -437,7 +462,13 @@ def generate_alink(name, url, type=None, id_attr=None, from_docs=False):
                 return alink
 
     if from_docs:
-        alink = '<a href="{url}"><strong>{name}</strong></a>'.format(url=url, name=html_escape(name))
+        alink = '<a href="{url}"><strong>{name}</strong></a>'.format(
+            url=url, name=html_escape(name))
+        if min_version:
+            git_tag = 'v0.{min_version.minor}.0'.format(min_version=min_version)
+            release_url = 'https://github.com/facebook/flow/releases/tag/{git_tag}'.format(git_tag=git_tag)
+            alink += ' <small><em>(<a href="{release_url}">since {git_tag}</a>)</em></small>'.format(
+                release_url=release_url, git_tag=git_tag)
     else:
         alink = '<a href="{url}">{name}</a>'.format(url=url, name=html_escape(name))
     if type:
@@ -470,6 +501,16 @@ def group_in_columns(items):
         grouped.append(group)
 
     return grouped
+
+
+def parse_version_string(version_string):
+    match = re.search(
+        r'v(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)$', version_string)
+    if match:
+        version_minor = int(match.group('minor'))
+    else:
+        raise Exception('Could not parse commit version', commit)
+    return version_minor
 
 
 def html_escape(text):
