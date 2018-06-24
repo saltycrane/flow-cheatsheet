@@ -19,6 +19,7 @@ RAW_DIR = None
 
 # Constants
 COMMITS = [
+    'v0.75.0',
     'v0.74.0',
     'v0.73.0',
     'v0.72.0',
@@ -148,20 +149,33 @@ def get_builtin_magic_results():
     print url
     body = download_file(url)
 
-    # parse file
-    results = []
+    results_with_docstring = []
     for line_no, line in enumerate(body.splitlines()):
         match = re.search(r'\(\*\s*(\$.*)$', line)
         if match:
             name = match.group(1).replace('*)', '')
-            results.append(Result(name, line_no, None, FILENAME, None))
+            results_with_docstring.append(Result(name, line_no, None, FILENAME, None))
+            continue
 
-    # post-process results
+    results_without_docstring = []
+    for line_no, line in enumerate(body.splitlines()):
+        match = re.search(r'\|\s+"(\$\w+)"\s+->', line)
+        if match:
+            name = match.group(1)
+            results_without_docstring.append(Result(name, line_no, None, FILENAME, None))
+
+    def has_docstring(type_name):
+        names_with_docstring = [x.name for x in results_with_docstring]
+        names_with_docstring = [x.split('<')[0] for x in names_with_docstring]
+        return type_name.startswith(tuple(names_with_docstring))
+
     def is_documented(type_name):
         documented_builtin_names = [x[0] for x in BUILTINS_PRIVATE]
         documented_builtin_names = [x.split('<')[0] for x in documented_builtin_names]
         return type_name.startswith(tuple(documented_builtin_names))
 
+    results = [x for x in results_without_docstring if not has_docstring(x.name)]
+    results += results_with_docstring
     results = [x for x in results if not is_documented(x.name)]
     results += BUILTINS_PRIVATE
     results = sorted(results, key=lambda result: result[0].lower())
