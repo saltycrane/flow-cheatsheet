@@ -69,6 +69,7 @@ FILES = [
 BUILTINS = [
     ('any', 'https://flow.org/en/docs/types/any/', None),
     ('boolean', 'https://flow.org/en/docs/types/primitives/#toc-booleans', None),
+    ('empty', 'https://github.com/facebook/flow/commit/c603505583993aa953904005f91c350f4b65d6bd', Version(34)),
     ('null', 'https://flow.org/en/docs/types/primitives/#toc-null-and-void', None),
     ('number', 'https://flow.org/en/docs/types/primitives/#toc-numbers', None),
     ('mixed', 'https://flow.org/en/docs/types/mixed/', None),
