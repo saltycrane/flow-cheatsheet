@@ -19,6 +19,7 @@ RAW_DIR = None
 
 # Constants
 COMMITS = [
+    'v0.76.0',
     'v0.75.0',
     'v0.74.0',
     'v0.73.0',
@@ -322,14 +323,14 @@ def post_process(results):
             members = post_process(members)
 
         # remove unwanted stuff at end
-        if '>' in name:
-            name = re.sub(r'^(.*\>)', r'\1', name)
+        match = re.search(r'^\s*\S+\<.*\>', name)
+        if match:
+            name = re.sub(r'^(.*\w\<.*\>)', r'\1', name)
         else:
             name = re.sub(r'=.*$', '', name)
             name = re.sub(r': .*$', '', name)
 
         name = re.sub(r'extends.*$', '', name)
-        # remove quotes
         name = name.strip('\'"')
 
         return Result(name, line_no, members, filename, type)
