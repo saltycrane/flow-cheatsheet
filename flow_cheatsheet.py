@@ -19,6 +19,8 @@ RAW_DIR = None
 
 # Constants
 COMMITS = [
+    'v0.79.1',
+    'v0.78.0',
     'v0.77.0',
     'v0.76.0',
     'v0.75.0',
