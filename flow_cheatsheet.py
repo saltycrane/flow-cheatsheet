@@ -19,6 +19,8 @@ RAW_DIR = None
 
 # Constants
 COMMITS = [
+    'v0.84.0',
+    'v0.83.0',
     'v0.82.0',
     'v0.81.0',
     'v0.80.0',
@@ -111,10 +113,12 @@ BUILTINS_PRIVATE = [
     ('$ElementType<T, K>', 'https://flow.org/en/docs/types/utilities/#toc-elementtype', Version(49)),
     ('$Exact<T>', 'https://flow.org/en/docs/types/utilities/#toc-exact', None),
     ('$Keys<T>', 'https://flow.org/en/docs/types/utilities/#toc-keys', None),
+    ('$NonMaybeType<T>', 'https://flow.org/en/docs/types/utilities/#toc-nonmaybe', None),
     ('$ObjMap<T, F>', 'https://flow.org/en/docs/types/utilities/#toc-objmap', None),
     ('$PropertyType<T, k>', 'https://flow.org/en/docs/types/utilities/#toc-propertytype', None),
     ('$ReadOnly<T>', 'https://flow.org/en/docs/types/utilities/#toc-readonly', Version(59)),
     ('$Rest<A, B>', 'https://flow.org/en/docs/types/utilities/#toc-rest', Version(56)),
+    ('$Shape<T>', 'https://flow.org/en/docs/types/utilities/#toc-shape', None),
     # ('$Subtype<T>', 'https://flow.org/en/docs/types/utilities/#toc-subtype', None),
     # ('$Supertype<T>', 'https://flow.org/en/docs/types/utilities/#toc-supertype', None),
     ('$TupleMap<T, F>', 'https://flow.org/en/docs/types/utilities/#toc-tuplemap', None),
