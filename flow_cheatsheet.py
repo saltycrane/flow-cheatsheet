@@ -19,6 +19,13 @@ RAW_DIR = None
 
 # Constants
 COMMITS = [
+    'v0.91.0',
+    'v0.90.0',
+    'v0.89.0',
+    'v0.88.0',
+    'v0.87.0',
+    'v0.86.0',
+    'v0.85.0',
     'v0.84.0',
     'v0.83.0',
     'v0.82.0',
@@ -376,6 +383,10 @@ def write_output(results, commit):
     fout.write('<a href="{GITHUB_DIR}">{GITHUB_DIR}</a>\n'.format(GITHUB_DIR=GITHUB_DIR))
     fout.write('The script to generate this list is <a href="https://github.com/saltycrane/flow-cheatsheet">on github</a>.\n')
     fout.write('Fixes welcome.\n')
+    fout.write('See also my\n')
+    fout.write('<a href="/typescript-cheat-sheet/latest/">TypeScript cheat sheet</a>,\n')
+    fout.write('<a href="/typescript-react-cheat-sheet/latest/">TypeScript React cheat sheet</a>,\n')
+    fout.write('and <a href="/blog/2017/08/docker-cheat-sheet/">Docker cheat sheet</a>.\n')
     fout.write('</p>\n')
     fout.write('<ul>\n')
     fout.write('<li>There are separate sections for "private" or "magic" types with a <code>$</code> in the name.\n')
