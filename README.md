@@ -8,4 +8,4 @@ The output of the script is here: [Flow cheatsheet](https://www.saltycrane.com/f
 
 [TypeScript cheatsheet](https://www.saltycrane.com/typescript-cheat-sheet/latest/),
 [TypeScript React cheatsheet](https://www.saltycrane.com/typescript-react-cheat-sheet/latest/),
-and the [script to generate them](https://github.com/saltycrane/flow-cheatsheet).
+and the [script to generate them](https://github.com/saltycrane/typescript-cheatsheet).
